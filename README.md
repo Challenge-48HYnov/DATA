@@ -4,7 +4,7 @@
 
 L’objectif de ce repository est de construire un **pipeline de données** permettant de :
 
-- récupérer des données de **pollution** et de **météo**
+- récupérer des données de **pollution** et de **météo** 
 - les **nettoyer et les structurer**
 - les **fusionner intelligemment**
 - calculer un **indice combiné**
@@ -52,7 +52,6 @@ Date de début	        Pour indexer les mesures dans le temps
 Date de fin	          Pour interpolation horaire si nécessaire
 Polluant	            Type de polluant (NO, O3, PM10…)
 valeur	              Valeur validée du polluant
-valeur brute	        À utiliser si valeur est manquante
 unité de mesure	      Pour normaliser toutes les mesures
 code site / nom site	Identification des stations (utile pour jointure GPS)
 type d'implantation	  Pondération selon zone urbaine / rurale
@@ -153,7 +152,7 @@ data/
 - télécharger dataset ATMO
 - nettoyer données
 - filtrer polluants (NO2, PM10, PM2.5)
-- faire pivot
+- faire pivot ( Transformer les lignes polluans en colonne ).
 - exporter pollution_clean.csv
 
 ### 👤 Personne 2 — Météo
