@@ -15,6 +15,7 @@ L’objectif de ce repository est de construire un **pipeline de données** perm
 ```bash
 GET /indices?date=2026-03-10
 
+
 👉 Et obtenir :
 
 les données météo
