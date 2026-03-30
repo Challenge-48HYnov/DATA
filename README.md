@@ -46,27 +46,57 @@ Nous simulons un système capable de fonctionner en temps réel, mais nous trava
 
 #### Pollution
 ##### garder :
-- date
-- station
-- polluant (NO2, PM10, PM2.5)
-- valeur
-- transformer en format large (pivot)
+
+Colonne	            Utilité
+Date de début	        Pour indexer les mesures dans le temps
+Date de fin	          Pour interpolation horaire si nécessaire
+Polluant	            Type de polluant (NO, O3, PM10…)
+valeur	              Valeur validée du polluant
+valeur brute	        À utiliser si valeur est manquante
+unité de mesure	      Pour normaliser toutes les mesures
+code site / nom site	Identification des stations (utile pour jointure GPS)
+type d'implantation	  Pondération selon zone urbaine / rurale
+type d’influence	    Pondération selon trafic / industriel / fond
+validité	            Pour filtrer ou pondérer les valeurs
+
+Facultatif si besoin pour debug ou API : Organisme
 
 #### Météo
 
 ##### garder :
 
-- date
-- station
-- température
-- vent
-- pluie
+Colonne	              Utilité
+lat / lon	            Coordonnées GPS pour la jointure géospatiale
+reference_time	      Pour indexer dans le temps
+t	                    Température
+dd / ff	              Vent (direction et vitesse)
+Humidité (u)	        Impact sur l’indice
+Pluie (rr1, rr24)	    Pour ajuster dispersion polluants
 
 ### 3. Transformation
 
 uniformiser les dates (format datetime)
 filtrer une période (ex : 2–3 jours)
 éventuellement limiter à une zone/station
+
+#### Important avant jointure : 
+
+Ordre des opérations : GPS avant fusion
+
+Il faut faire le calcul de distance GPS avant la fusion, pour ces raisons :
+
+Les fichiers ne sont pas matchables directement par station (nom site n’existe pas côté météo).
+On a besoin de savoir quelle station météo est la plus proche de chaque station pollution.
+Une fois qu’on a trouvé le “plus proche”, on peut fusionner les fichiers en fonction du temps (par heure ou par quart d’heure) pour créer l’indice.
+
+Donc :
+
+Étape 1 : Calculer la station météo la plus proche pour chaque station pollution (Haversine).
+Étape 2 : Fusionner pollution + météo selon temps et station météo associée.
+Étape 3 : Calculer l’indice pondéré pollution × météo.
+Étape 4 : Préparer la table finale pour l’API.
+
+
 
 ### 4. Jointure (fusion)
 
