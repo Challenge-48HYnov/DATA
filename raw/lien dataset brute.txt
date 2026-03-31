@@ -1,0 +1,3 @@
+https://drive.google.com/drive/folders/1JVNHUA8CBt7KXKt3Vm7vgrBuOTaa6-68?usp=drive_link
+Vous pouvez retrouver tous les fichiers brutes qu'on a utiliser dans ce lien drive.
+A cause du volume important des fichiers csv, github ne peut pas les supporter
